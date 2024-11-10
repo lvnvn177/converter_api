@@ -1,2 +1,9 @@
 .env
 /load/model
+
+lab/share/jupyter/
+
+app/lab/etc/
+app/lab/share/
+app/lab/bin/
+app/lab/lib
