@@ -16,4 +16,8 @@ COPY ./api /test/api
 
 COPY ./load /test/load
 
+COPY ./test.py /test/test.py
+
+COPY ./2304.01852v4_22.pdf /test/2304.01852v4_22.pdf
+
 CMD ["python", "main.py"]
