@@ -45,7 +45,7 @@ class RAG():
     def add_chunks(self, path: str) -> None:
         print(f' [x] {path}')
         file_name = path.split('.')[0]
-        self.collection = self.client.create_collection(
+        self.collection = self.client.create_collection( # type: ignore
                 name=file_name.split('/')[-1],
                 embedding_function=self.embeddings,
                 metadata={'hnsw:space': 'cosine'}
@@ -81,7 +81,7 @@ class RAG():
     
     def generate_response(self, query):
 
-        query_result = self.collection.query(
+        query_result = self.collection.query( # type: ignore
             query_texts=query,
             n_results=3
         )
@@ -102,7 +102,7 @@ class RAG():
             {'role': 'user', 'content': USER_PROMPT}
         ]
 
-        prompt = self.tokenizer.apply_chat_template(
+        prompt = self.tokenizer.apply_chat_template( # type: ignore
             message,
             tokenize=False,
             add_generation_prompt=True
@@ -116,8 +116,8 @@ class RAG():
         "echo":True,
         }
 
-        response_msg = self.model(prompt, repeat_penalty=1.3, **generation_kwargs)
-        text = response_msg['choices'][0]['text'][len(prompt):]
+        response_msg = self.model(prompt, repeat_penalty=1.3, **generation_kwargs) # type: ignore
+        text = response_msg['choices'][0]['text'][len(prompt):] # type: ignore
         return text
 
 
