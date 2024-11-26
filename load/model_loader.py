@@ -33,7 +33,7 @@ class RAG():
             verbose=False
         )
 
-        self.embeddings = embedding_functions.SentenceTransformerEmbeddingFunction( # type: ignore
+        self.embeddings = embedding_functions.SentenceTransformerEmbeddingFunction(
             model_name=EMBED_MODEL_ID,
             device = "cuda",
             normalize_embeddings = True,
@@ -45,7 +45,7 @@ class RAG():
     def add_chunks(self, path: str) -> None:
         print(f' [x] {path}')
         file_name = path.split('.')[0]
-        self.collection = self.client.create_collection( # type: ignore
+        self.collection = self.client.create_collection(
                 name=file_name.split('/')[-1],
                 embedding_function=self.embeddings,
                 metadata={'hnsw:space': 'cosine'}
@@ -81,7 +81,7 @@ class RAG():
     
     def generate_response(self, query):
 
-        query_result = self.collection.query( # type: ignore
+        query_result = self.collection.query(
             query_texts=query,
             n_results=3
         )
@@ -102,7 +102,7 @@ class RAG():
             {'role': 'user', 'content': USER_PROMPT}
         ]
 
-        prompt = self.tokenizer.apply_chat_template( # type: ignore
+        prompt = self.tokenizer.apply_chat_template(
             message,
             tokenize=False,
             add_generation_prompt=True
@@ -116,17 +116,17 @@ class RAG():
         "echo":True,
         }
 
-        response_msg = self.model(prompt, repeat_penalty=1.3, **generation_kwargs) # type: ignore
-        text = response_msg['choices'][0]['text'][len(prompt):] # type: ignore
+        response_msg = self.model(prompt, repeat_penalty=1.3, **generation_kwargs)
+        text = response_msg['choices'][0]['text'][len(prompt):]
         return text
 
 
 # LLM 모델을 초기화하는 함수
 def load_llm_model():
     # model_id = 'MLP-KTLim/llama-3-Korean-Bllossom-8B-gguf-Q4_K_M'
-    tokenizer = AutoTokenizer.from_pretrained('app/local_load/model')
+    tokenizer = AutoTokenizer.from_pretrained('load/model')
     llm = Llama(
-        model_path='app/local_load/model/llama-3-Korean-Bllossom-8B-Q4_K_M.gguf', #다운로드받은 모델의 위치
+        model_path='load/model/llama-3-Korean-Bllossom-8B-Q4_K_M.gguf', #다운로드받은 모델의 위치
         n_ctx=4096,
         n_gpu_layers=-1,        # Number of model layers to offload to GPU
         verbose=False

@@ -15,8 +15,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 
-
 from load.model_loader import RAG
+
 
 localQna = APIRouter(prefix='/localQna')
 
@@ -58,8 +58,10 @@ async def upload(request: Request):
     ragInstance.add_chunks(pdf_file_path)
     print('RAG Instance Initiated...')
 
+    
     # # 임시 파일 삭제
     os.remove(pdf_file_path)
+
 
     # 응답 반환
     return {"answer": 'ok'}

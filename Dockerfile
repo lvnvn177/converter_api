@@ -8,6 +8,8 @@ COPY ./.env /test/.env
 
 COPY ./db.py /test/db.py
 
+COPY ./db /test/db
+
 RUN pip install --no-cache-dir --upgrade -r /test/requirements.txt
 
 COPY ./main.py /test/main.py

@@ -2,6 +2,10 @@ import os
 import urllib
 import math
 import json
+# import tempfile
+import requests
+import aiofiles
+
 import boto3
 from dotenv import load_dotenv
 from fastapi import APIRouter
@@ -62,7 +66,7 @@ async def list_files():
 def generate_s3_url(bucket, key):
     return "https://s3-ap-northeast-2.amazonaws.com/%s/%s" % (
         bucket,
-        urllib.parse.quote(key, safe="~()*!.'")  # URL 인코딩 # type: ignore
+        urllib.parse.quote(key, safe="~()*!.'")  # URL 인코딩
     )
 
 
